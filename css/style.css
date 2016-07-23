@@ -8,3 +8,6 @@ html {
 
 // --- Your styles here ---
 
+#map{
+  size:100%;
+}
