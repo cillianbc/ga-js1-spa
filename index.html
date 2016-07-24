@@ -4,26 +4,33 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>JS1 - SPA</title>
-  <link rel="stylesheet" href="https://npmcdn.com/normalize.css">
   <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/h5bp.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-
-  <div id="container">
-
-  </div>
   <div class="container-fluid">
-    ...
+    <div class = "row">
+      <div id="leftCol"class="col-md-6">
+        <input type="text" id="urlInput" class="form-control" placeholder="Website URL www.example.com" aria-describedby="basic-addon1">
+        <button type="button" id="goButton" class="btn btn-lrg">GO!!</button>
+      </div>
+      <div id="rightCol" class="col-md-6">
+        <h3>To Do List</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div id="leftResultsCol"class="col-md-6">
+      </div>
+    </div>
   </div>
   <!-- DOM Utility functions -->
   <script src="https://rawgit.com/jesstelford/a981e6877034231bd43b526a07b3a7b4/raw/js1-utilities.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
   <!-- Underscore.js functions -->
   <script src="js/underscore.js"></script>
-
   <!-- Our code -->
   <script src="js/main.js"></script>
 </body>

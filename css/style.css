@@ -1,13 +1,17 @@
-/* apply a natural box layout model to all elements, but allowing components to change */
-html {
-  box-sizing: border-box;
+#container {
 }
-*, *:before, *:after {
-  box-sizing: inherit;
+.input-group{
+
+}
+#leftCol{
+  padding:2rem
+}
+#goButton{
+  background-color:blue;
+  color:white;
+  margin:1rem;
 }
 
-// --- Your styles here ---
-
-#map{
-  size:100%;
+#mobielDisplay{
+  display:none;;
 }
