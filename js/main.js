@@ -53,6 +53,7 @@
             })
           }
         })
+        renderResults(state,resultsContainer)
         })
   }
 
@@ -63,13 +64,7 @@
     resetView(resultsContainer)
     resetResults()
     state.testPage = document.querySelector('#urlInput').value;
-    let prom = new Promise(function(resolve,reject){
-      resolve(pageSpeed())
-    })
-    prom.then((fook)=>{
-      renderResults(state,resultsContainer)
-    })
-
+    renderResults(state,resultsContainer)
     pageSpeed()
     document.querySelector('#urlInput').value = ""
   })
