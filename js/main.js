@@ -184,7 +184,7 @@
           }).join("")}
         </div>
         <div id="mobile" class="tab-pane" data-toggle="tab">
-          <h2>Website Score: ${data.results.mobile.score}/100</h2>
+          <h2>${data.prettyUrl} Score: ${data.results.mobile.score}/100</h2>
           ${data.results.mobile.resultDetails.map((result)=>{
             return `${renderResultPanels(result)}`
           }).join("")}
