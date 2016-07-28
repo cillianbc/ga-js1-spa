@@ -29,14 +29,23 @@
   }
 
   // ------------- API Call ----------------------------------------------------
+  function fetchAll(){
+    let  desktopFetch =
+      fetch("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+state.testPage+"&strategy=desktop&key=AIzaSyDfytDoXF01OD9LrVti-BukQjNjxlj2u_I")
+      .then((response)=>{
+        return response.json()
+      })
+    let mobileFetch = fetch("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+state.testPage+"&strategy=mobile&key=AIzaSyDfytDoXF01OD9LrVti-BukQjNjxlj2u_I")
+      .then((response)=>{
+        return response.json()
+      })
 
-  function pageSpeed(){
-    fetch("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+state.testPage+"&strategy=desktop&key=AIzaSyDfytDoXF01OD9LrVti-BukQjNjxlj2u_I")
-    .then((response)=>{
-      return response.json()
-    }).then((callback)=>{
-      state.results.desktop.score = callback.ruleGroups.SPEED.score
-        _.each(callback.formattedResults.ruleResults,function(value,key,list){
+      Promise.all([desktopFetch,mobileFetch]).then((results)=>{
+        let desktopResults = results[0]
+        let mobileResults = results[1]
+        state.results.desktop.score = desktopResults.ruleGroups.SPEED.score
+        state.results.mobile.score = mobileResults.ruleGroups.SPEED.score
+        _.each(desktopResults.formattedResults.ruleResults,function(value,key,list){
           console.log(value)
           if(value.ruleImpact >0.1 && value.localizedRuleName !== "Reduce server response time"){
             state.results.desktop.resultDetails.push({
@@ -45,26 +54,20 @@
             })
           }
         })
-      }).then(()=>{
-        fetch("https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url="+state.testPage+"&strategy=mobile&key=AIzaSyDfytDoXF01OD9LrVti-BukQjNjxlj2u_I")
-          .then((response)=>{
-            return response.json()
-          }).then((callback)=>{
-            state.results.mobile.score = callback.ruleGroups.SPEED.score
-            prettyWebsite()
-            _.each(callback.formattedResults.ruleResults,function(value,key,list){
-              console.log(value)
-              if(value.ruleImpact >0.1 && value.localizedRuleName !== "Reduce server response time"){
-                state.results.mobile.resultDetails.push({
-                  resultName:value.localizedRuleName,
-                  resultSummary:value.summary.format
-                })
-              }
+        _.each(mobileResults.formattedResults.ruleResults,function(value,key,list){
+          console.log(value)
+          if(value.ruleImpact >0.1 && value.localizedRuleName !== "Reduce server response time"){
+            state.results.mobile.resultDetails.push({
+              resultName:value.localizedRuleName,
+              resultSummary:value.summary.format
             })
-            renderResults(state,resultsContainer)
-            })
-          })
+          }
+        })
+        renderResults(state,resultsContainer)
+
+    })
   }
+
 
   // ------------------ firebase functions-------------------------------------------------
 
@@ -87,7 +90,7 @@
     resetResults()
     state.testPage = document.querySelector('#urlInput').value;
     loading(resultsContainer)
-    pageSpeed()
+    fetchAll()
     document.querySelector('#urlInput').value = ""
   })
 
